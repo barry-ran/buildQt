@@ -3,6 +3,9 @@ name: build_Qt6.11.2_LLVM-MinGW_RP
 on: workflow_dispatch
 #on: [push, pull_request]
 
+permissions:
+  contents: write
+
 env:
   QT_VERSION: 6.11.2
   QT_VERSION2: '6.11'
@@ -94,5 +97,5 @@ jobs:
       uses: softprops/action-gh-release@v2
       with:
         tag_name: temp_Qt_${{env.QT_VERSION}}-${{env.FILE_NAME}}
-        release_name: TempRelease_Qt_${{env.QT_VERSION}}-${{env.FILE_NAME}}
+        name: TempRelease_Qt_${{env.QT_VERSION}}-${{env.FILE_NAME}}
         files: Qt_${{env.QT_VERSION}}-${{env.FILE_NAME}}.7z

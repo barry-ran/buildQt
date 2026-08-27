@@ -12,6 +12,7 @@
 | shared-release | shared | release | 主要构建64位版本
 | shared-debug | shared | debug | 主要构建64位版本
 | shared-debug-and-release | shared | debug-and-release | 主要构建64位版本
+| main-shared-debug-and-release | shared | debug-and-release | 基于main最新内容，Qt5/Qt6动态双配置版本
 
 ## 版本
 1. 无"RP"版本：从Qt完整源代码构建，构建绝大部分组件

@@ -3,6 +3,9 @@ name: build_Qt5.15.19_MinGW810_64
 on: workflow_dispatch
 #on: [push, pull_request]
 
+permissions:
+  contents: write
+
 env:
   QT_VERSION: 5.15.19
   QT_VERSION2: 5.15
@@ -81,5 +84,5 @@ jobs:
       uses: softprops/action-gh-release@v2
       with:
         tag_name: temp_Qt_${{env.QT_VERSION}}-${{env.FILE_NAME}}
-        release_name: TempRelease_Qt_${{env.QT_VERSION}}-${{env.FILE_NAME}}
+        name: TempRelease_Qt_${{env.QT_VERSION}}-${{env.FILE_NAME}}
         files: Qt_${{env.QT_VERSION}}-${{env.FILE_NAME}}.7z

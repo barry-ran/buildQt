@@ -14,6 +14,8 @@
 | shared-debug-and-release | shared | debug-and-release | 主要构建64位版本
 | main-shared-debug-and-release | shared | debug-and-release | 基于main最新内容，Qt5/Qt6动态双配置版本
 
+`main-shared-debug-and-release` 的 MSVC2022 Qt5/Qt6 配置额外启用 `-force-debug-info`，因此 Release 目标也会生成调试信息/PDB（打包步骤会压缩安装目录中的 PDB）。
+
 ## 版本
 1. 无"RP"版本：从Qt完整源代码构建，构建绝大部分组件
 2. 有"RP"版本：从Qt组件源代码构建，目前只构建qtbase、qttools、qttranslations、qtsvg共4个组件

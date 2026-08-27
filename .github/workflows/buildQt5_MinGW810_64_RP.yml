@@ -36,8 +36,8 @@ jobs:
       run: |
         cd ..  #Directory: D:\a\buildQt
         mkdir -p mingw64
-        curl -L -o 8.1.0-debug-and-release-posix-seh.7z https://download.qt.io/online/qtsdkrepository/windows_x86/desktop/tools_mingw81/qt.tools.win64_mingw810/8.1.0-1-202411201005x86_64-8.1.0-gdb-11.2.0-debug-and-release-posix-seh-rt_v6-rev0.7z
-        7z x D:\a\buildQt\8.1.0-debug-and-release-posix-seh.7z -oD:\a\buildQt\mingw64
+        curl -L -o 8.1.0-release-posix-seh.7z https://download.qt.io/online/qtsdkrepository/windows_x86/desktop/tools_mingw81/qt.tools.win64_mingw810/8.1.0-1-202411201005x86_64-8.1.0-gdb-11.2.0-release-posix-seh-rt_v6-rev0.7z
+        7z x D:\a\buildQt\8.1.0-release-posix-seh.7z -oD:\a\buildQt\mingw64
 
     # 构建Qt
     - name: Build Qt

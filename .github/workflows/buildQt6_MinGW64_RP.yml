@@ -6,7 +6,7 @@ on: workflow_dispatch
 env:
   QT_VERSION: 6.9.0
   QT_VERSION2: 6.9
-  FILE_NAME: shared-Debug_mingw1510_64_UCRT_RP
+  FILE_NAME: shared-Release_mingw1510_64_UCRT_RP
 
 jobs:
   windows_mingw64_shared_debug:

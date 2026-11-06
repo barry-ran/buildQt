@@ -38,7 +38,8 @@ mkdir "%BUILD_DIR%" && cd /d "%BUILD_DIR%"
 if errorlevel 1 exit /b %errorlevel%
 
 :: configure
-call %SRC_QT%\configure.bat -shared -debug-and-release -force-debug-info -prefix %INSTALL_DIR% -nomake examples -nomake tests -skip qtwebengine -opensource -confirm-license -qt-libpng -qt-libjpeg -qt-zlib -qt-pcre -qt-freetype -schannel -opengl dynamic -angle -platform win32-msvc
+:: ANGLE is auto-detected for dynamic OpenGL; -angle explicitly disables dynamic OpenGL.
+call %SRC_QT%\configure.bat -shared -debug-and-release -force-debug-info -prefix %INSTALL_DIR% -nomake examples -nomake tests -skip qtwebengine -opensource -confirm-license -qt-libpng -qt-libjpeg -qt-zlib -qt-pcre -qt-freetype -schannel -opengl dynamic -platform win32-msvc
 if errorlevel 1 exit /b %errorlevel%
 
 :: 编译、安装

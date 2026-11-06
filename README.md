@@ -16,6 +16,8 @@
 
 `main-shared-debug-and-release` 的 MSVC2022 Qt5/Qt6 配置额外启用 `-force-debug-info`，因此 Release 目标也会生成调试信息/PDB（打包步骤会压缩安装目录中的 PDB）。
 
+Qt5 MSVC2022 64 位完整版本使用 `-opengl dynamic`，由 Qt 自动检测 ANGLE；不要同时指定 `-angle`，否则 Qt 5.15 的配置规则会禁用 Dynamic OpenGL。构建失败时，可在 Action 的 `Qt5-msvc2022-configuration-logs` artifact 中查看完整的 `config.log`。
+
 ## 版本
 1. 无"RP"版本：从Qt完整源代码构建，构建绝大部分组件
 2. 有"RP"版本：从Qt组件源代码构建，目前只构建qtbase、qttools、qttranslations、qtsvg共4个组件

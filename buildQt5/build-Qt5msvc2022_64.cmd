@@ -9,6 +9,7 @@ SET MSVC_VERSION=msvc2022_64
 
 :: 设置MSVC2022环境
 CALL "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" amd64
+if errorlevel 1 exit /b %errorlevel%
 
 :: 设置jom和Perl
 SET PATH=D:\a\buildQt\jom;D:\a\buildQt\Strawberry\c\bin;D:\a\buildQt\Strawberry\perl\site\bin;D:\a\buildQt\Strawberry\perl\bin;%PATH%
@@ -34,16 +35,21 @@ SET BUILD_DIR="%QT_PATH%\%QT_VERSION%\build-%MSVC_VERSION%"
 rmdir /s /q "%BUILD_DIR%"
 :: 定位到构建目录：
 mkdir "%BUILD_DIR%" && cd /d "%BUILD_DIR%"
+if errorlevel 1 exit /b %errorlevel%
 
 :: configure
 call %SRC_QT%\configure.bat -shared -debug-and-release -force-debug-info -prefix %INSTALL_DIR% -nomake examples -nomake tests -skip qtwebengine -opensource -confirm-license -qt-libpng -qt-libjpeg -qt-zlib -qt-pcre -qt-freetype -schannel -opengl dynamic -angle -platform win32-msvc
+if errorlevel 1 exit /b %errorlevel%
 
 :: 编译、安装
 jom
+if errorlevel 1 exit /b %errorlevel%
 jom install
+if errorlevel 1 exit /b %errorlevel%
 
 ::复制qt.conf
 copy %~dp0\qt.conf %INSTALL_DIR%\bin
+if errorlevel 1 exit /b %errorlevel%
 
 ::@pause
-@cmd /k cd /d %INSTALL_DIR%
+exit /b 0

@@ -75,11 +75,13 @@ jobs:
 
         # 调用编译脚本
         cmd.exe /c "call `"D:\a\buildQt\buildQt\buildQt5\build-Qt5msvc2022_64.cmd`""
+        if ($LASTEXITCODE -ne 0) { throw "Qt configure, build or install failed (exit code $LASTEXITCODE). Check the Build Qt log above." }
 
     - name: Install software OpenGL runtime
       shell: pwsh
       run: |
         $installDir = Join-Path $env:GITHUB_WORKSPACE "../Qt/${{env.QT_VERSION}}-shared/msvc2022_64"
+        if (-not (Test-Path (Join-Path $installDir "bin/Qt5Core.dll") -PathType Leaf)) { throw "Qt installation is missing Qt5Core.dll: $installDir. Check the Build Qt log." }
         $runtimeDir = Join-Path $installDir "software-opengl"
         $archive = Join-Path $env:RUNNER_TEMP "opengl32sw.7z"
         Invoke-WebRequest -Uri "https://download.qt.io/online/qtsdkrepository/windows_x86/desktop/qt5_5152/qt.qt5.5152.win64_msvc2019_64/5.15.2-0-202011130602opengl32sw-64-mesa_12_0_rc2.7z" -OutFile $archive

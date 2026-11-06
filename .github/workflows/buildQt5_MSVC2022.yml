@@ -76,6 +76,19 @@ jobs:
         # 调用编译脚本
         cmd.exe /c "call `"D:\a\buildQt\buildQt\buildQt5\build-Qt5msvc2022_64.cmd`""
 
+    - name: Install software OpenGL runtime
+      shell: pwsh
+      run: |
+        $installDir = Join-Path $env:GITHUB_WORKSPACE "../Qt/${{env.QT_VERSION}}-shared/msvc2022_64"
+        $runtimeDir = Join-Path $installDir "software-opengl"
+        $archive = Join-Path $env:RUNNER_TEMP "opengl32sw.7z"
+        Invoke-WebRequest -Uri "https://download.qt.io/online/qtsdkrepository/windows_x86/desktop/qt5_5152/qt.qt5.5152.win64_msvc2019_64/5.15.2-0-202011130602opengl32sw-64-mesa_12_0_rc2.7z" -OutFile $archive
+        7z x $archive "-o$runtimeDir" -y
+        if ($LASTEXITCODE -ne 0) { throw "Failed to extract software OpenGL runtime" }
+        $runtimeDll = Get-ChildItem $runtimeDir -Filter opengl32sw.dll -Recurse -File
+        if (@($runtimeDll).Count -ne 1) { throw "Expected one 64-bit opengl32sw.dll" }
+        Copy-Item $runtimeDll.FullName (Join-Path $installDir "bin/opengl32sw.dll")
+
     # 打包
     - name: Package binaries
       run: |

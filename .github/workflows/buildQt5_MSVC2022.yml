@@ -75,7 +75,24 @@ jobs:
 
         # 调用编译脚本
         cmd.exe /c "call `"D:\a\buildQt\buildQt\buildQt5\build-Qt5msvc2022_64.cmd`""
-        if ($LASTEXITCODE -ne 0) { throw "Qt configure, build or install failed (exit code $LASTEXITCODE). Check the Build Qt log above." }
+        if ($LASTEXITCODE -ne 0) {
+          $buildExitCode = $LASTEXITCODE
+          Get-ChildItem "./${{env.QT_VERSION}}/build-msvc2022_64" -Filter config.log -Recurse -File -ErrorAction SilentlyContinue | ForEach-Object {
+            Write-Output "Configuration log: $($_.FullName)"
+            Get-Content $_.FullName -Tail 200
+          }
+          throw "Qt configure, build or install failed (exit code $buildExitCode). See the configuration logs artifact and Build Qt log."
+        }
+
+    - name: Upload failed configuration logs
+      if: failure()
+      uses: actions/upload-artifact@v7
+      with:
+        name: Qt5-msvc2022-configuration-logs
+        path: |
+          ../Qt/${{env.QT_VERSION}}/build-msvc2022_64/**/config.log
+          ../Qt/${{env.QT_VERSION}}/build-msvc2022_64/**/config.summary
+        if-no-files-found: warn
 
     - name: Install software OpenGL runtime
       shell: pwsh
